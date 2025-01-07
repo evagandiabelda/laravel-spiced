@@ -21,8 +21,13 @@ class StoreUsuarioRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Per a crear un usuari, tots els camps són requerits:
         return [
-            //
+            'nombre_completo' => 'required|string|max:255',
+            'nombre_usuario' => 'required|string|max:255|unique:usuarios',
+            'email' => 'required|email|max:255|unique:usuarios',
+            'password' => 'required|string|min:8',
+            'perfil_privado' => 'boolean',
         ];
     }
 }

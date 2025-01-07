@@ -21,8 +21,13 @@ class UpdateUsuarioRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Per a editar un usuari, no cal que tots els camps siguen requerits:
         return [
-            //
+            'nombre_completo' => 'sometimes|string|max:255',
+            'nombre_usuario' => 'sometimes|string|max:255|unique:usuarios,nombre_usuario,' . $this->usuario->id,
+            'email' => 'sometimes|email|max:255|unique:usuarios,email,' . $this->usuario->id,
+            'password' => 'sometimes|string|min:8',
+            'perfil_privado' => 'boolean',
         ];
     }
 }
