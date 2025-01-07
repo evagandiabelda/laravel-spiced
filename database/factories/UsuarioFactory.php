@@ -3,21 +3,25 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Usuario>
- */
 class UsuarioFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = \App\Models\Usuario::class;
+
+    public function definition()
     {
         return [
-            //
+            'nombre_completo' => $this->faker->name,
+            'nombre_usuario' => $this->faker->unique()->userName,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => bcrypt('password'),
+            'foto' => null,
+            'descripcion_perfil' => $this->faker->sentence,
+            'lista_shares_publicados' => json_encode([]),
+            'lista_shares_guardados' => json_encode([]),
+            'lista_notificaciones' => json_encode([]),
+            'perfil_privado' => $this->faker->boolean,
         ];
     }
 }
