@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
@@ -11,7 +11,14 @@ class UsuarioController extends Controller
     // Mostrar todos los usuarios
     public function index()
     {
-        return response()->json(Usuario::all());
+        $usuarios = Usuario::all();
+        return view('usuarios.index', compact('usuarios'));
+    }
+
+    // Mostrar el formulario para crear un nuevo usuario
+    public function create()
+    {
+        return view('usuarios.create');
     }
 
     // Crear un nuevo usuario
@@ -32,19 +39,14 @@ class UsuarioController extends Controller
 
         $usuario = Usuario::create($validatedData);
 
-        return response()->json($usuario, 201);
+        return redirect()->route('usuarios.show', $usuario->id)->with('success', '¡Bienvenid@ a Spiced!');
     }
 
     // Mostrar un solo usuario
     public function show($id)
     {
-        $usuario = Usuario::find($id);
-        
-        if (!$usuario) {
-            return response()->json(['error' => 'Usuario no encontrado'], 404);
-        }
-
-        return response()->json($usuario);
+        $usuario = Usuario::findOrFail($id);
+        return view('usuarios.show', compact('usuario'));
     }
 
     // Actualizar un usuario
@@ -75,7 +77,7 @@ class UsuarioController extends Controller
 
         $usuario->update($validatedData);
 
-        return response()->json($usuario);
+        return redirect()->route('usuarios.show', $usuario->id)->with('success', 'Cambios guardados.');
     }
 
     // Eliminar un usuario
@@ -89,6 +91,6 @@ class UsuarioController extends Controller
 
         $usuario->delete();
 
-        return response()->json(['message' => 'Usuario eliminado']);
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

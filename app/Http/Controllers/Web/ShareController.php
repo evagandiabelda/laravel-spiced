@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web;
 
 use App\Models\Share;
 use Illuminate\Http\Request;
@@ -11,8 +11,14 @@ class ShareController extends Controller
     // Mostrar todos los shares
     public function index()
     {
-        $shares = Share::with(['usuario'])->get();
-        return response()->json($shares);
+        $shares = Share::all();
+        return view('shares.index', compact('shares'));
+    }
+
+    // Mostrar el formulario para crear un nuevo share
+    public function create()
+    {
+        return view('shares.create');
     }
 
     // Crear un nuevo share
@@ -30,19 +36,14 @@ class ShareController extends Controller
 
         $share = Share::create($request->all());
 
-        return response()->json($share, 201);
+        return redirect()->route('shares.show', $share->id)->with('success', 'Tu Share se ha publicado correctamente.');
     }
 
     // Mostrar un solo share
     public function show(string $id)
     {
-        $share = Share::with(['usuario'])->findOrFail($id);
-        
-        if (!$share) {
-            return response()->json(['error' => 'Share no encontrado'], 404);
-        }
-
-        return response()->json($share);
+        $share = Share::findOrFail($id);
+        return view('shares.show', compact('share'));
     }
 
     // Actualizar un share
@@ -62,7 +63,7 @@ class ShareController extends Controller
 
         $share->update($request->all());
 
-        return response()->json($share, 200);
+        return redirect()->route('shares.show', $share->id)->with('success', 'Cambios guardados.');
     }
 
     // Eliminar un share
@@ -76,6 +77,6 @@ class ShareController extends Controller
 
         $share->delete();
 
-        return response()->json(['message' => 'Share eliminado']);
+        return redirect()->route('shares.index')->with('success', 'Share eliminado correctamente.');
     }
 }

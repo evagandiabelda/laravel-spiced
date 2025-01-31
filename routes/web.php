@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /* ------------ RUTES WEB: ------------ */
@@ -7,6 +8,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome'); // Està renderitzant la vista per defecte de Laravel.
 });
+
+Route::resource('usuarios', UsuarioController::class);
+Route::resource('shares', ShareController::class);
+Route::resource('comentarios', ComentarioController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('spices', SpiceController::class);
 
 /* Fallback Route (404): */
 Route::fallback(function () {

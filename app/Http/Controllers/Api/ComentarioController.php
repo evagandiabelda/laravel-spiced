@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comentario;
@@ -13,7 +13,6 @@ class ComentarioController extends Controller
     // Mostrar todos los comentarios
     public function index()
     {
-        // Recuperar todos los comentarios, con las relaciones a usuarios y shares si es necesario
         $comentarios = Comentario::with(['usuario', 'share'])->get();
         return response()->json($comentarios);
     }
@@ -29,7 +28,6 @@ class ComentarioController extends Controller
 
         $comentario = Comentario::create($request->all());
 
-        // Devolver una respuesta con el comentario recién creado
         return response()->json($comentario, 201);
     }
 
