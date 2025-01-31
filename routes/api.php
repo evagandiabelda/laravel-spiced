@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\UsuarioController;
 
+/* ------------ RUTES API: ------------ */
+
 Route::apiResource('usuarios', UsuarioController::class);
 
 /* Fallback Route (404): */
-
 Route::fallback(function () {
     return response()->json([
         'error' => 'La pàgina no existeix. Revisa la URL.'
