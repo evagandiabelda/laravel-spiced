@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Web\UsuarioController;
+use App\Http\Controllers\Web\ShareController;
+use App\Http\Controllers\Web\ComentarioController;
+use App\Http\Controllers\Web\CategoriaController;
+use App\Http\Controllers\Web\SpiceController;
 use Illuminate\Support\Facades\Route;
 
 /* ------------ RUTES WEB: ------------ */
