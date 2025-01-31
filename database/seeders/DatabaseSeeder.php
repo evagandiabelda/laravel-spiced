@@ -2,18 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\UsuarioSeeder;
+use Database\Seeders\ShareSeeder;
+use Database\Seeders\ComentarioSeeder;
+use Database\Seeders\CategoriaSeeder;
+use Database\Seeders\SpiceSeeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Crida als seeders:
-        $this->call(UsuarioSeeder::class);
+        // Quan executem "php artisan db:seed", cridarà als seeders en l'ordre que volem:
+        $this->call([
+            UsuarioSeeder::class,
+            ShareSeeder::class,
+            ComentarioSeeder::class,
+            CategoriaSeeder::class,
+            SpiceSeeder::class,
+        ]);
     }
 }
