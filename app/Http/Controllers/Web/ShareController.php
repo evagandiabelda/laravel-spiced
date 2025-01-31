@@ -21,6 +21,13 @@ class ShareController extends Controller
         return view('shares.create');
     }
 
+    // Mostrar el formulario para editar un share
+    public function edit($id)
+    {
+        $share = Share::findOrFail($id);
+        return view('shares.edit', compact('share'));
+    }
+
     // Crear un nuevo share
     public function store(Request $request)
     {

@@ -21,6 +21,13 @@ class UsuarioController extends Controller
         return view('usuarios.create');
     }
 
+    // Mostrar el formulario para editar un usuario
+    public function edit($id)
+    {
+        $usuario = Usuario::findOrFail($id);
+        return view('usuarios.edit', compact('usuario'));
+    }
+
     // Crear un nuevo usuario
     public function store(Request $request)
     {

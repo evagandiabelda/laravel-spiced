@@ -14,11 +14,4 @@ class SpiceController extends Controller
         $spices = Spice::all();
         return view('spices.index', compact('spices'));
     }
-
-    // Mostrar un solo spice
-    public function show(string $id)
-    {
-        $spice = Spice::findOrFail($id);
-        return view('spices.show', compact('spice'));
-    }
 }

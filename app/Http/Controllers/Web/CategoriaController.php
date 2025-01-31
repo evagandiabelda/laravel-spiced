@@ -14,11 +14,4 @@ class CategoriaController extends Controller
         $categorias = Categoria::all();
         return view('categorias.index', compact('categorias'));
     }
-
-    // Mostrar una sola categoría
-    public function show(string $id)
-    {
-        $categoria = Categoria::findOrFail($id);
-        return view('categorias.show', compact('categoria'));
-    }
 }
