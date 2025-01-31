@@ -1,85 +1,93 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreUsuarioRequest;
-use App\Http\Requests\UpdateUsuarioRequest;
+use App\Http\Controllers\Controller;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Mostrar todos los usuarios
     public function index()
     {
-        return response()->json(Usuario::all(), 200);
+        return response()->json(Usuario::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Crear un nuevo usuario
+    public function store(Request $request)
     {
-        // Soles en vistes, ja que aquesta funció s'encarregaria de mostrar el formulari.
-    }
+        $request->validate([
+            'nombre_completo' => 'required|string|max:100',
+            'nombre_usuario' => 'required|string|unique:usuarios,nombre_usuario|max:50',
+            'email' => 'required|email|unique:usuarios,email|max:100',
+            'password' => 'required|string|min:8',
+            'foto' => 'nullable|string|max:255',
+            'descripcion_perfil' => 'nullable|string',
+            'perfil_privado' => 'nullable|boolean',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreUsuarioRequest $request)
-    {
-        $usuario = Usuario::create($request->all());
+        // En aquest cas s'especifica per raons de seguretat:
+        $usuario = Usuario::create([
+            'nombre_completo' => $request->input('nombre_completo'),
+            'nombre_usuario' => $request->input('nombre_usuario'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'foto' => $request->input('foto'),
+            'descripcion_perfil' => $request->input('descripcion_perfil'),
+            'perfil_privado' => $request->input('perfil_privado'),
+        ]);
+
         return response()->json($usuario, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Usuario $usuario)
+    // Mostrar un solo usuario
+    public function show($id)
     {
+        $usuario = Usuario::find($id);
+        
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
-        return response()->json($usuario, 200);
+        return response()->json($usuario);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Usuario $usuario)
+    // Actualizar un usuario
+    public function update(Request $request, $id)
     {
-        // Soles en vistes, ja que aquesta funció s'encarregaria de mostrar el formulari.
-    }
+        $usuario = Usuario::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUsuarioRequest $request, Usuario $usuario)
-    {
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
-        $usuario->update($request->all());
+        $request->validate([
+            'nombre_completo' => 'required|string|max:100',
+            'nombre_usuario' => 'required|string|unique:usuarios,nombre_usuario,' . $usuario->id . '|max:50',
+            'email' => 'required|email|unique:usuarios,email,' . $usuario->id . '|max:100',
+            'password' => 'nullable|string|min:8',
+            'foto' => 'nullable|string|max:255',
+            'descripcion_perfil' => 'nullable|string',
+            'perfil_privado' => 'nullable|boolean',
+        ]);        
 
-        return response()->json($usuario, 200);
+        $usuario->update($request->only(['nombre', 'email', 'password']));
+
+        return response()->json($usuario);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Usuario $usuario)
+    // Eliminar un usuario
+    public function destroy($id)
     {
+        $usuario = Usuario::find($id);
+
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
         $usuario->delete();
 
-        return response()->json(['message' => 'Usuario eliminado'], 200);
+        return response()->json(['message' => 'Usuario eliminado']);
     }
 }
