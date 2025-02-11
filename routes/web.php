@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 /* ------------ RUTES WEB: ------------ */
 
-Route::get('/', function () {
-    return view('welcome'); // Està renderitzant la vista per defecte de Laravel.
-});
+Route::get('/', [ShareController::class, 'index'])->name('shares.index');
 
-Route::resource('usuarios', UsuarioController::class);
 Route::resource('shares', ShareController::class);
+Route::resource('usuarios', UsuarioController::class);
 Route::resource('comentarios', ComentarioController::class);
 Route::resource('categorias', CategoriaController::class);
 Route::resource('spices', SpiceController::class);

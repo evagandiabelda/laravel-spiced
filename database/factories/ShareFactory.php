@@ -17,8 +17,8 @@ class ShareFactory extends Factory
             'fecha_publicacion' => $this->faker->dateTimeThisYear(),
             'titulo'            => $this->faker->sentence(),
             'texto'             => $this->faker->paragraph(),
-            'img_principal'     => $this->faker->imageUrl(),
-            'img_secundaria'    => $this->faker->imageUrl(),
+            'img_principal' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
+            'img_secundaria' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
             'share_verificado'  => $this->faker->boolean(),
             'usuario_id'        => Usuario::factory(),
         ];

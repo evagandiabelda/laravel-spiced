@@ -12,7 +12,7 @@ class ShareController extends Controller
     public function index()
     {
         $shares = Share::all();
-        return view('shares.index', compact('shares'));
+        return view('index', compact('shares'));
     }
 
     // Mostrar el formulario para crear un nuevo share
