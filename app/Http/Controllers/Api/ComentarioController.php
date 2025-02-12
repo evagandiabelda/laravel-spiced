@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Comentario;
 use Illuminate\Http\Request;
 use App\Models\Share;
-use App\Models\Usuario;
+use App\Models\User;
 
 class ComentarioController extends Controller
 {
     // Mostrar todos los comentarios
     public function index()
     {
-        $comentarios = Comentario::with(['usuario', 'share'])->get();
+        $comentarios = Comentario::with(['user', 'share'])->get();
         return response()->json($comentarios);
     }
 
@@ -34,7 +34,7 @@ class ComentarioController extends Controller
     // Mostrar un solo comentario
     public function show(string $id)
     {
-        $comentario = Comentario::with(['usuario', 'share'])->findOrFail($id);
+        $comentario = Comentario::with(['user', 'share'])->findOrFail($id);
 
         if (!$comentario) {
             return response()->json(['error' => 'Comentario no encontrado'], 404);

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     // Mostrar todos los usuarios
     public function index()
     {
-        return response()->json(Usuario::all());
+        return response()->json(User::all());
     }
 
     // Crear un nuevo usuario
@@ -30,7 +30,7 @@ class UsuarioController extends Controller
         // Abans de crear l'usuari, s'encripta la password:
         $validatedData['password'] = bcrypt($validatedData['password']);
 
-        $usuario = Usuario::create($validatedData);
+        $usuario = User::create($validatedData);
 
         return response()->json($usuario, 201);
     }
@@ -38,7 +38,7 @@ class UsuarioController extends Controller
     // Mostrar un solo usuario
     public function show($id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
         
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
@@ -50,7 +50,7 @@ class UsuarioController extends Controller
     // Actualizar un usuario
     public function update(Request $request, $id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
@@ -81,7 +81,7 @@ class UsuarioController extends Controller
     // Eliminar un usuario
     public function destroy($id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);

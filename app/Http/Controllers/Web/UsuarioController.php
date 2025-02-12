@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     // Mostrar todos los usuarios
     public function index()
     {
-        $usuarios = Usuario::all();
+        $usuarios = User::all();
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -24,8 +24,8 @@ class UsuarioController extends Controller
     // Mostrar el formulario para editar un usuario
     public function edit($id)
     {
-        $usuario = Usuario::findOrFail($id);
-        return view('usuarios.edit', compact('usuario'));
+        $usuario = User::findOrFail($id);
+        return view('usuarios.edit', compact('user'));
     }
 
     // Crear un nuevo usuario
@@ -44,7 +44,7 @@ class UsuarioController extends Controller
         // Abans de crear l'usuari, s'encripta la password:
         $validatedData['password'] = bcrypt($validatedData['password']);
 
-        $usuario = Usuario::create($validatedData);
+        $usuario = User::create($validatedData);
 
         return redirect()->route('usuarios.show', $usuario->id)->with('success', '¡Bienvenid@ a Spiced!');
     }
@@ -52,14 +52,14 @@ class UsuarioController extends Controller
     // Mostrar un solo usuario
     public function show($nombre_usuario)
     {
-        $usuario = Usuario::where('nombre_usuario', $nombre_usuario)->firstOrFail();
-        return view('usuarios.show', compact('usuario'));
+        $usuario = User::where('nombre_usuario', $nombre_usuario)->firstOrFail();
+        return view('usuarios.show', compact('user'));
     }
 
     // Actualizar un usuario
     public function update(Request $request, $id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
@@ -90,7 +90,7 @@ class UsuarioController extends Controller
     // Eliminar un usuario
     public function destroy($id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);

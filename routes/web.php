@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\UsuarioController;
+use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\ShareController;
 use App\Http\Controllers\Web\ComentarioController;
 use App\Http\Controllers\Web\CategoriaController;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ShareController::class, 'index'])->name('shares.index');
 
 Route::resource('shares', ShareController::class);
-Route::resource('usuarios', UsuarioController::class);
+Route::resource('usuarios', UserController::class);
 Route::resource('comentarios', ComentarioController::class);
 Route::resource('categorias', CategoriaController::class);
 Route::resource('spices', SpiceController::class);
@@ -37,3 +37,12 @@ Route::get('saludo/{nombre?}', function($nombre = "Invitado") {
 })->where('nombre', "[A-Za-z]+");
 
 /* Route::get('/user', [UserController::class, 'index']); */
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

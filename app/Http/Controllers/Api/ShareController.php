@@ -11,7 +11,7 @@ class ShareController extends Controller
     // Mostrar todos los shares
     public function index()
     {
-        $shares = Share::with(['usuario'])->get();
+        $shares = Share::with(['user'])->get();
         return response()->json($shares);
     }
 
@@ -36,7 +36,7 @@ class ShareController extends Controller
     // Mostrar un solo share
     public function show(string $id)
     {
-        $share = Share::with(['usuario'])->findOrFail($id);
+        $share = Share::with(['user'])->findOrFail($id);
         
         if (!$share) {
             return response()->json(['error' => 'Share no encontrado'], 404);

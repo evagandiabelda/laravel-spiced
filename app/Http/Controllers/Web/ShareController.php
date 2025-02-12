@@ -81,7 +81,7 @@ class ShareController extends Controller
     // Mostrar un solo share
     public function show(string $id)
     {
-        $share = Share::with('usuario')->findOrFail($id);
+        $share = Share::with('user')->findOrFail($id);
         return view('share.show', compact('share'));
     }
 

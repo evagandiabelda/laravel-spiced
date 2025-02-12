@@ -3,14 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Usuario;
+use App\Models\User;
 use App\Models\Spice;
 
-class UsuarioSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     public function run()
     {
-        $usuarios = Usuario::factory(10)->create();
+        $usuarios = User::factory(10)->create();
 
         // Obtener todos los spices disponibles:
         $spices = Spice::all();

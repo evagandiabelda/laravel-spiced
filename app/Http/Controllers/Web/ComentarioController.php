@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comentario;
 use Illuminate\Http\Request;
 use App\Models\Share;
-use App\Models\Usuario;
+use App\Models\User;
 
 class ComentarioController extends Controller
 {

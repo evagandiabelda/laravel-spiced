@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\UsuarioSeeder;
+use Database\Seeders\UserSeeder;
 use Database\Seeders\ShareSeeder;
 use Database\Seeders\ComentarioSeeder;
 use Database\Seeders\CategoriaSeeder;
@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategoriaSeeder::class,
             SpiceSeeder::class,
-            UsuarioSeeder::class,
+            UserSeeder::class,
             ShareSeeder::class,
             ComentarioSeeder::class,
         ]);
