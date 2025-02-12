@@ -11,9 +11,17 @@ use App\Models\Spice;
 class ShareController extends Controller
 {
     // Mostrar todos los shares
-    public function index()
+    public function index(Request $request)
     {
-        $shares = Share::with(['usuario', 'categorias', 'spices'])->inRandomOrder()->get();
+        $query = Share::query();
+
+        if ($request->has('q') && !empty($request->q)) {
+            $query->where('titulo', 'LIKE', '%' . $request->q . '%') // Buscar per títol
+                  ->orWhere('texto', 'LIKE', '%' . $request->q . '%'); // Buscar també pel contingut
+        }
+    
+        $shares = $query->latest()->paginate(10);
+    
         return view('index', compact('shares'));
     }
 
@@ -21,13 +29,8 @@ class ShareController extends Controller
     public function create()
     {
 
-        \Log::info('🚀 Entrando en el método create() de ShareController');
-
         $categorias = Categoria::all(); // Obtiene todas las categorías
         $spices = Spice::all(); // Obtiene todos los spices
-
-        \Log::info('📌 Categorías obtenidas:', ['categorias' => $categorias]);
-        \Log::info('📌 Spices obtenidos:', ['spices' => $spices]);
     
         return view('share.create', compact('categorias', 'spices'));
     }
@@ -42,8 +45,6 @@ class ShareController extends Controller
     
     public function store(Request $request)
     {
-
-        \Log::info('🚀 Entrando en store() con los siguientes datos:', $request->all());
 
 /*         $request->validate([
             'usuario_id' => 'required|exists:users,id', // De momento, validamos el usuario manualmente
@@ -68,14 +69,10 @@ class ShareController extends Controller
             'fecha_publicacion' => now(), // Asigna la fecha actual automáticamente
             'share_verificado' => false, // Por defecto, no verificado
         ]);
-
-        \Log::info('📌 Share creado con ID:', ['id' => $share->id]);
     
         // Asociar categorías y spices
         $share->categorias()->attach($request->categorias);
         $share->spices()->attach($request->spices);
-
-        \Log::info('✅ Categorías y Spices asociados correctamente.');
     
         return redirect()->route('shares.show', $share->id)->with('success', 'Tu Share se ha publicado correctamente.');
     }

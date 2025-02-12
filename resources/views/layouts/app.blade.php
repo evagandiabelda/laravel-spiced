@@ -13,7 +13,7 @@
 
 <body class="font-roboto bg-[#ebe4e4] m-0 p-0">
 
-    <header class="w-full flex flex-row justify-between items-center bg-white px-10 py-4 shadow-md">
+    <header class="w-full flex flex-row justify-between items-center gap-10 bg-white px-10 py-4 shadow-md">
 
         <div class="flex flex-row items-center gap-10">
             <img src="{{ asset('logo-spiced-pos.svg') }}" alt="logotipo" class="h-10">
@@ -23,6 +23,19 @@
                 <a href="{{ route('shares.create') }}" class="text-xl font-bold hover:opacity-50">Compartir</a>
             </nav>
         </div>
+
+        <form action="{{ route('shares.index') }}" method="GET" class="flex flex-1 gap-6 rounded-full py-2 px-6 bg-[#ebe4e4]">
+            <input 
+                type="search" 
+                name="q" 
+                class="flex flex-1 bg-transparent outline-none" 
+                placeholder="Buscar Shares..." 
+                value="{{ request('q') }}"
+            >
+            <button type="submit">
+                <img src="{{ asset('search-icon.svg') }}" alt="icono buscador" class="h-5">
+            </button>
+        </form>
 
         <a href="{{ route('usuarios.show', 1) }}" class="text-xl font-bold hover:opacity-50">
             <div class="h-11 rounded-full p-[3px] border-[3px] border-[#ff9486]">
