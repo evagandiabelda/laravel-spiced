@@ -14,10 +14,10 @@ class UsuarioFactory extends Factory
     {
         return [
             'nombre_completo' => $this->faker->name(),
-            'nombre_usuario' => $this->faker->unique()->userName(),
+            'nombre_usuario' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => bcrypt('password'),
-            'foto' => $this->faker->imageUrl(640, 480, 'people'),
+            'foto' => 'https://i.pravatar.cc/' . $this->faker->unique()->numberBetween(1, 1000),
             'descripcion_perfil' => $this->faker->paragraph(),
             'perfil_privado' => $this->faker->boolean(),
         ];

@@ -50,9 +50,9 @@ class UsuarioController extends Controller
     }
 
     // Mostrar un solo usuario
-    public function show($id)
+    public function show($nombre_usuario)
     {
-        $usuario = Usuario::findOrFail($id);
+        $usuario = Usuario::where('nombre_usuario', $nombre_usuario)->firstOrFail();
         return view('usuarios.show', compact('usuario'));
     }
 

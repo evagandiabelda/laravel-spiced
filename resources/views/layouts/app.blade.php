@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 </head>
-<body class="bg-gray-100 font-roboto bg-[#ebe4e4]">
+
+<body class="font-roboto bg-[#ebe4e4] m-0 p-0">
 
     <header class="w-full flex flex-row justify-between items-center bg-white px-10 py-4 shadow-md">
 
@@ -18,7 +20,7 @@
 
             <nav class="flex flex-row justify-end items-center gap-8 border-l-2 border-l-[#b0aaaa] pl-10">
                 <a href="{{ url('/') }}" class="text-xl font-bold hover:opacity-50">Explorar</a>
-                <a href="{{ route('usuarios.index') }}" class="text-xl font-bold hover:opacity-50">Otros usuarios</a>
+                <a href="{{ route('shares.create') }}" class="text-xl font-bold hover:opacity-50">Compartir</a>
             </nav>
         </div>
 
@@ -30,9 +32,22 @@
 
     </header>
 
-    <main class="max-w-7xl mx-auto p-12">
+    <main class="w-full min-h-[100vh] flex flex-col items-center mx-auto pb-[100px]">
         @yield('content') <!-- Contingut específic de cada vista -->
     </main>
+
+    <footer class="w-full -mt-4 -mb-5 mx-0 p-0 flex flex-col gap-0 bg-transparent">
+
+        <div class='w-full min-h-[18px] flex flex-col justify-end items-center m-0 p-0 overflow-hidden'>
+            <img src="{{ asset('wavy-footer.svg') }}" alt="Inicio del footer" class='m-0 p-0 translate-y-[1px] min-w-[1920px]' />
+        </div>
+
+        <div class="w-full flex flex-row justify-between items-center m-0 p-12 m-0 gap-2 bg-[#1b1b1b]">
+            <img src="{{ asset('logo-spiced-neg.svg') }}" alt="logo spiced">
+            <p class='text-[0.8rem] text-white/70'>ⓒ Spiced. Creado con ❤ por y para gente neurospicy.</p>
+        </div>
+
+</footer>
 
 </body>
 </html>

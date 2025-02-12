@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         // Quan executem "php artisan db:seed", cridarà als seeders en l'ordre que volem:
         $this->call([
+            CategoriaSeeder::class,
+            SpiceSeeder::class,
             UsuarioSeeder::class,
             ShareSeeder::class,
             ComentarioSeeder::class,
-            CategoriaSeeder::class,
-            SpiceSeeder::class,
         ]);
     }
 }
