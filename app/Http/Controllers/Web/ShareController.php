@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Categoria;
 use App\Models\Spice;
+use Illuminate\Support\Facades\Auth;
 
 class ShareController extends Controller
 {
@@ -31,6 +32,12 @@ class ShareController extends Controller
 
         $categorias = Categoria::all(); // Obtiene todas las categorías
         $spices = Spice::all(); // Obtiene todos los spices
+
+        // PROTECCIÓN DE LA RUTA:
+        // Si el usuario NO está autenticado, se redirige al Login.
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión para crear un nuevo Share.');
+        }
     
         return view('share.create', compact('categorias', 'spices'));
     }
@@ -46,8 +53,8 @@ class ShareController extends Controller
     public function store(Request $request)
     {
 
-/*         $request->validate([
-            'user_id' => 'required|exists:users,id', // De momento, validamos el usuario manualmente
+        $request->validate([
+            'titulo' => 'required|string|max:255',
             'texto' => 'required|string',
             'img_principal' => 'nullable|string|max:255',
             'img_secundaria' => 'nullable|string|max:255',
@@ -57,11 +64,11 @@ class ShareController extends Controller
             'spices.*' => 'exists:spices,id',
         ]);
 
-        \Log::info('✅ Validación pasada correctamente.'); */
+        \Log::info('✅ Validación pasada correctamente.');
     
         // Crear el share con datos básicos
         $share = Share::create([
-            'user_id' => 1, // De momento, lo ponemos manualmente
+            'user_id' => Auth::id(),
             'titulo' => $request->titulo,
             'texto' => $request->texto,
             'img_principal' => $request->img_principal,

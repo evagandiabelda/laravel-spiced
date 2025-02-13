@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -59,32 +60,29 @@ class UserController extends Controller
     // Actualizar un usuario
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        // Obtener el usuario autenticado
+        $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Usuario no encontrado'], 404);
-        }
-
+        // Validar los datos del formulario
         $validatedData = $request->validate([
             'nombre_completo' => 'required|string|max:100',
-            'name' => 'required|string|unique:users,name,' . $user->id . '|max:50',
-            'email' => 'required|email|unique:users,email,' . $user->id . '|max:100',
             'password' => 'nullable|string|min:8',
             'photo' => 'nullable|string|max:255',
             'descripcion_perfil' => 'nullable|string',
-            'perfil_privado' => 'nullable|boolean',
-        ]);        
+        ]);
 
-        // Si se proporciona una nueva contraseña, encriptarla:
+        // Si se proporciona una nueva contraseña, encriptarla
         if ($request->filled('password')) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
+            $validatedData['password'] = Hash::make($validatedData['password']);
         } else {
             unset($validatedData['password']); // Evita sobrescribir con un valor vacío
         }
 
-        $user->update($validatedData);
+        // Actualizar los datos
+        $user->fill($validatedData);
+        $user->save();
 
-        return redirect()->route('users.show', $user->id)->with('success', 'Cambios guardados.');
+        return redirect()->route('dashboard', $user->id)->with('success', 'Cambios guardados.');
     }
 
     // Eliminar un usuario

@@ -16,7 +16,9 @@
     <header class="w-full flex flex-row justify-between items-center gap-10 bg-white px-10 py-4 shadow-md">
 
         <div class="flex flex-row items-center gap-10">
-            <img src="{{ asset('logo-spiced-pos.svg') }}" alt="logotipo" class="h-10">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('logo-spiced-pos.svg') }}" alt="logotipo" class="h-10">
+            </a>
 
             <nav class="flex flex-row justify-end items-center gap-8 border-l-2 border-l-[#b0aaaa] pl-10">
                 <a href="{{ url('/') }}" class="text-xl font-bold hover:opacity-50">Explorar</a>
@@ -37,9 +39,9 @@
             </button>
         </form>
 
-        <a href="{{ route('users.show', 1) }}" class="text-xl font-bold hover:opacity-50">
+        <a href="{{ route('dashboard') }}" class="text-xl font-bold hover:opacity-50">
             <div class="h-11 rounded-full p-[3px] border-[3px] border-[#ff9486]">
-                <img src="{{ asset('icono-usuario-anonimo.svg') }}" alt="mi perfil" class="h-full">
+                <img src="{{ Auth::user()->photo ? Auth::user()->photo : asset('icono-usuario-anonimo.svg') }}" alt="mi perfil" class="h-full">
             </div>
         </a>
 

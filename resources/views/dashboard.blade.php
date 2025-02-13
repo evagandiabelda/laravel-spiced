@@ -22,8 +22,14 @@
                 </div>
             </div>
 
-            <div class="w-full flex flex-row justify-end pt-6">
+            <div class="w-full flex flex-col items-end gap-4 pt-6">
                 <p class="text-[#63ad3c] font-bold text-right">Cacahuete sabio</p>
+                <!-- Mensaje de éxito tras la redirección desde el formulario Update -->
+                @if (session('success'))
+                    <div class="bg-[#63ad3c] text-white px-3 py-2 rounded-lg mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
             </div>
 
         </div>
@@ -32,11 +38,14 @@
             <p>{{ Auth::user()->descripcion_perfil }}</p>
             <p class="text-[#63ad3c] italic"><strong>Mis spices: </strong>{{ Auth::user()->spices->pluck('nombre')->implode(', ') }}</p>
             <div class="w-full flex flex-row justify-end gap-4">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="pt-[4px] pb-[7px] px-8 rounded-full border-2 border-[#1b1b1b] hover:opacity-60 transition ease font-semibold">
+                        Cerrar sesión
+                    </button>
+                </form>
                 <a href="{{ route('users.edit', Auth::user()->id) }}" class="pt-[4px] pb-[7px] px-8 rounded-full bg-[#1b1b1b] text-white hover:opacity-60 transition ease font-semibold">
                     <p  class="text-center">Editar perfil</p>
-                </a>
-                <a href="{{ route('shares.create', Auth::user()->id) }}" class="pt-[4px] pb-[7px] px-8 rounded-full bg-[#1b1b1b] text-white hover:opacity-60 transition ease font-semibold">
-                    <p  class="text-center">Nuevo share</p>
                 </a>
             </div>
         </div>
@@ -45,7 +54,13 @@
 
     <!-- SHARES -->
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
+    <div class="w-2/3 flex flex-col items-start px-16 pt-12">
+        <a href="{{ route('shares.create') }}" class="pt-[4px] pb-[7px] px-8 rounded-full bg-[#1b1b1b] text-white hover:opacity-60 transition ease font-semibold">
+            <p  class="text-center">Nuevo share</p>
+        </a>
+    </div>
+
+    <div class="w-2/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-16 py-12">
         @if(Auth::user()->shares->isNotEmpty())
                 @foreach(Auth::user()->shares as $share)
                     
