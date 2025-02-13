@@ -51,9 +51,13 @@
                 <a href="{{ url('/') }}" class="w-fit pt-[4px] pb-[7px] px-8 mx-4 rounded-full border-2 border-[#1b1b1b] text-[#1b1b1b] hover:opacity-60 transition ease font-semibold">
                     <p  class="text-center">← Volver al Feed</p>
                 </a>
-                <a href="{{ url('/') }}" class="w-fit pt-[4px] pb-[7px] px-8 mx-4 rounded-full bg-[#1b1b1b] text-white hover:bg-[#ff9486] transition ease font-semibold">
-                    <p  class="text-center">¡Me gusta! ❤︎</p>
-                </a>
+
+                @if(Auth::check() && Auth::user()->id === $share->user_id)
+                    <a href="{{ route('shares.edit', $share->id) }}" class="w-fit pt-[4px] pb-[7px] px-8 mx-4 rounded-full bg-[#1b1b1b] text-white hover:bg-[#ff9486] transition ease font-semibold">
+                        <p  class="text-center">Editar</p>
+                    </a>
+                @endif
+
             </div>
 
         </div>

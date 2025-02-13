@@ -41,7 +41,7 @@
 
         <a href="{{ route('dashboard') }}" class="text-xl font-bold hover:opacity-50">
             <div class="h-11 rounded-full p-[3px] border-[3px] border-[#ff9486]">
-                <img src="{{ Auth::user()->photo ? Auth::user()->photo : asset('icono-usuario-anonimo.svg') }}" alt="mi perfil" class="h-full">
+                <img src="{{ Auth::check() && Auth::user()->photo ? Auth::user()->photo : asset('icono-usuario-anonimo.svg') }}" alt="mi perfil" class="h-full">
             </div>
         </a>
 

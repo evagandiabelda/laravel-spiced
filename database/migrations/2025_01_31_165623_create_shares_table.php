@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id(); // Se establece como PK y como AUTO_INCREMENT por defecto.
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // FK
             $table->dateTime('fecha_publicacion');
+            $table->dateTime('fecha_modificacion');
             $table->string('titulo');
             $table->text('texto');
             $table->string('img_principal')->nullable();

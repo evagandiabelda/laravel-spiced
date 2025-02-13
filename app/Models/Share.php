@@ -15,6 +15,7 @@ class Share extends Model
     // Atributos que se pueden asignar en masa:
     protected $fillable = [
         'fecha_publicacion',
+        'fecha_modificacion',
         'titulo',
         'texto',
         'img_principal',

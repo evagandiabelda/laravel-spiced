@@ -21,7 +21,12 @@ class ShareController extends Controller
                   ->orWhere('texto', 'LIKE', '%' . $request->q . '%'); // Buscar també pel contingut
         }
     
-        $shares = $query->latest()->paginate(10);
+        $shares = $query->orderBy('fecha_modificacion', 'desc')->paginate(10);
+
+        // Si el usuario está autenticado y es administrador, devolver la vista "index-admin"
+        if (Auth::check() && Auth::user()->is_admin) {
+            return view('index-admin', compact('shares'));
+        }
     
         return view('index', compact('shares'));
     }
@@ -29,7 +34,6 @@ class ShareController extends Controller
     // Mostrar el formulario para crear un nuevo share
     public function create()
     {
-
         $categorias = Categoria::all(); // Obtiene todas las categorías
         $spices = Spice::all(); // Obtiene todos los spices
 
@@ -47,7 +51,17 @@ class ShareController extends Controller
     public function edit($id)
     {
         $share = Share::findOrFail($id);
-        return view('share.edit', compact('share'));
+
+        $categorias = Categoria::all(); // Obtiene todas las categorías
+        $spices = Spice::all(); // Obtiene todos los spices
+
+        // PROTECCIÓN DE LA RUTA:
+        // Si el usuario NO está autenticado, se redirige al Login.
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión para crear un nuevo Share.');
+        }
+
+        return view('share.edit', compact('share', 'categorias', 'spices'));
     }
     
     public function store(Request $request)
@@ -74,6 +88,7 @@ class ShareController extends Controller
             'img_principal' => $request->img_principal,
             'img_secundaria' => $request->img_secundaria,
             'fecha_publicacion' => now(), // Asigna la fecha actual automáticamente
+            'fecha_modificacion' => now(), // Asigna la fecha actual automáticamente
             'share_verificado' => false, // Por defecto, no verificado
         ]);
     
@@ -98,16 +113,28 @@ class ShareController extends Controller
         $share = Share::findOrFail($id);
 
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'fecha_publicacion' => 'required|date',
             'titulo' => 'required|string|max:255',
             'texto' => 'required|string',
             'img_principal' => 'nullable|string|max:255',
             'img_secundaria' => 'nullable|string|max:255',
-            'share_verificado' => 'nullable|boolean',
+            'categorias' => 'required|array',
+            'categorias.*' => 'exists:categorias,id',
+            'spices' => 'required|array',
+            'spices.*' => 'exists:spices,id',
         ]);
 
-        $share->update($request->all());
+        \Log::info('✅ Validación pasada correctamente.');
+
+        // Actualizar el share:
+        $share = Share::update([
+            'user_id' => Auth::id(),
+            'titulo' => $request->titulo,
+            'texto' => $request->texto,
+            'img_principal' => $request->img_principal,
+            'img_secundaria' => $request->img_secundaria,
+            'fecha_modificacion' => now(), // Asigna la fecha actual automáticamente
+            'share_verificado' => false, // Por defecto, no verificado
+        ]);
 
         return redirect()->route('shares.show', $share->id)->with('success', 'Cambios guardados.');
     }

@@ -14,13 +14,14 @@ class ShareFactory extends Factory
     public function definition()
     {
         return [
-            'fecha_publicacion' => $this->faker->dateTimeThisYear(),
-            'titulo'            => $this->faker->sentence(),
-            'texto'             => implode("\n\n", array_map(fn() => implode(' ', $this->faker->sentences(8)), range(1, 5))),
-            'img_principal'     => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
-            'img_secundaria'    => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
-            'share_verificado'  => $this->faker->boolean(),
-            'user_id'        => User::factory(),
+            'fecha_publicacion'     => $this->faker->dateTimeThisYear(),
+            'fecha_modificacion'    => now(),
+            'titulo'                => $this->faker->sentence(),
+            'texto'                 => implode("\n\n", array_map(fn() => implode(' ', $this->faker->sentences(8)), range(1, 5))),
+            'img_principal'         => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
+            'img_secundaria'        => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
+            'share_verificado'      => $this->faker->boolean(),
+            'user_id'               => User::factory(),
         ];
     }
 }
