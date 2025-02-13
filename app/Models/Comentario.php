@@ -16,16 +16,16 @@ class Comentario extends Model
     protected $fillable = [
         'texto',
         'fecha',
-        'usuario_id',
+        'user_id',
         'share_id',
     ];
 
 
     // Relación con otras tablas:
 
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuario::class); // Relación 1:N
+        return $this->belongsTo(User::class); // Relación 1:N
     }
 
     public function share()

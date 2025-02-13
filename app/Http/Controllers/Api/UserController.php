@@ -19,10 +19,10 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'nombre_completo' => 'required|string|max:100',
-            'nombre_usuario' => 'required|string|unique:usuarios,nombre_usuario|max:50',
-            'email' => 'required|email|unique:usuarios,email|max:100',
+            'name' => 'required|string|unique:users,name|max:50',
+            'email' => 'required|email|unique:users,email|max:100',
             'password' => 'required|string|min:8',
-            'foto' => 'nullable|string|max:255',
+            'photo' => 'nullable|string|max:255',
             'descripcion_perfil' => 'nullable|string',
             'perfil_privado' => 'nullable|boolean',
         ]);
@@ -30,38 +30,38 @@ class UserController extends Controller
         // Abans de crear l'usuari, s'encripta la password:
         $validatedData['password'] = bcrypt($validatedData['password']);
 
-        $usuario = User::create($validatedData);
+        $user = User::create($validatedData);
 
-        return response()->json($usuario, 201);
+        return response()->json($user, 201);
     }
 
     // Mostrar un solo usuario
     public function show($id)
     {
-        $usuario = User::find($id);
+        $user = User::find($id);
         
-        if (!$usuario) {
+        if (!$user) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
-        return response()->json($usuario);
+        return response()->json($user);
     }
 
     // Actualizar un usuario
     public function update(Request $request, $id)
     {
-        $usuario = User::find($id);
+        $user = User::find($id);
 
-        if (!$usuario) {
+        if (!$user) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
         $validatedData = $request->validate([
             'nombre_completo' => 'required|string|max:100',
-            'nombre_usuario' => 'required|string|unique:usuarios,nombre_usuario,' . $usuario->id . '|max:50',
-            'email' => 'required|email|unique:usuarios,email,' . $usuario->id . '|max:100',
+            'name' => 'required|string|unique:users,name,' . $user->id . '|max:50',
+            'email' => 'required|email|unique:users,email,' . $user->id . '|max:100',
             'password' => 'nullable|string|min:8',
-            'foto' => 'nullable|string|max:255',
+            'photo' => 'nullable|string|max:255',
             'descripcion_perfil' => 'nullable|string',
             'perfil_privado' => 'nullable|boolean',
         ]);        
@@ -73,21 +73,21 @@ class UserController extends Controller
             unset($validatedData['password']); // Evita sobrescribir con un valor vacío
         }
 
-        $usuario->update($validatedData);
+        $user->update($validatedData);
 
-        return response()->json($usuario);
+        return response()->json($user);
     }
 
     // Eliminar un usuario
     public function destroy($id)
     {
-        $usuario = User::find($id);
+        $user = User::find($id);
 
-        if (!$usuario) {
+        if (!$user) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
-        $usuario->delete();
+        $user->delete();
 
         return response()->json(['message' => 'Usuario eliminado']);
     }

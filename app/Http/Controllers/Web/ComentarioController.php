@@ -30,7 +30,7 @@ class ComentarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id', // Validar que el usuario existe
+            'user_id' => 'required|exists:users,id', // Validar que el usuario existe
             'share_id' => 'required|exists:shares,id', // Validar que el share existe
             'texto' => 'required|string',
         ]);

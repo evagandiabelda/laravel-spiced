@@ -31,14 +31,15 @@ class UserFactory extends Factory
     {
         return [
             'nombre_completo' => $this->faker->name(),
-            'nombre_usuario' => $this->faker->userName(),
+            'name' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'foto' => 'https://i.pravatar.cc/' . $this->faker->unique()->numberBetween(1, 1000),
+            'photo' => 'https://i.pravatar.cc/' . $this->faker->unique()->numberBetween(1, 1000),
             'descripcion_perfil' => $this->faker->paragraph(),
             'perfil_privado' => $this->faker->boolean(),
             'remember_token' => Str::random(10),
+            'is_admin' => $this->faker->boolean(),
         ];
     }
 

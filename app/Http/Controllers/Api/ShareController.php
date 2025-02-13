@@ -19,7 +19,7 @@ class ShareController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'user_id' => 'required|exists:users,id',
             'fecha_publicacion' => 'required|date',
             'titulo' => 'required|string|max:255',
             'texto' => 'required|string',
@@ -51,7 +51,7 @@ class ShareController extends Controller
         $share = Share::findOrFail($id);
 
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'user_id' => 'required|exists:users,id',
             'fecha_publicacion' => 'required|date',
             'titulo' => 'required|string|max:255',
             'texto' => 'required|string',

@@ -47,7 +47,7 @@ class ShareController extends Controller
     {
 
 /*         $request->validate([
-            'usuario_id' => 'required|exists:users,id', // De momento, validamos el usuario manualmente
+            'user_id' => 'required|exists:users,id', // De momento, validamos el usuario manualmente
             'texto' => 'required|string',
             'img_principal' => 'nullable|string|max:255',
             'img_secundaria' => 'nullable|string|max:255',
@@ -61,7 +61,7 @@ class ShareController extends Controller
     
         // Crear el share con datos básicos
         $share = Share::create([
-            'usuario_id' => 1, // De momento, lo ponemos manualmente
+            'user_id' => 1, // De momento, lo ponemos manualmente
             'titulo' => $request->titulo,
             'texto' => $request->texto,
             'img_principal' => $request->img_principal,
@@ -91,7 +91,7 @@ class ShareController extends Controller
         $share = Share::findOrFail($id);
 
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'user_id' => 'required|exists:users,id',
             'fecha_publicacion' => 'required|date',
             'titulo' => 'required|string|max:255',
             'texto' => 'required|string',

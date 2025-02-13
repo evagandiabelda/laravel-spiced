@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Share;
-use App\Models\Usuario;
+use App\Models\User;
 
 class ShareFactory extends Factory
 {
@@ -20,7 +20,7 @@ class ShareFactory extends Factory
             'img_principal'     => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
             'img_secundaria'    => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
             'share_verificado'  => $this->faker->boolean(),
-            'usuario_id'        => Usuario::factory(),
+            'user_id'        => User::factory(),
         ];
     }
 }

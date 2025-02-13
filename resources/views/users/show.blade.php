@@ -16,11 +16,11 @@
 
             <div class="w-full flex flex-row items-center gap-4">
                 <div class="rounded-full p-1 border-4 border-[#ff9486]">
-                    <img src="{{ $usuario->foto }}" alt="foto de perfil" class="w-28 rounded-full">
+                    <img src="{{ $user->photo }}" alt="foto de perfil" class="w-28 rounded-full">
                 </div>
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-2xl font-bold">{{ $usuario->nombre_completo }}</h1>
-                    <p class="text-gray-500 italic">@ {{ $usuario->nombre_usuario }}</p>
+                    <h1 class="text-2xl font-bold">{{ $user->nombre_completo }}</h1>
+                    <p class="text-gray-500 italic">@ {{ $user->name }}</p>
                 </div>
             </div>
 
@@ -31,8 +31,8 @@
         </div>
 
         <div class="max-w-4xl flex flex-col gap-8 pl-52 pr-16">
-            <p>{{ $usuario->descripcion_perfil }}</p>
-            <p class="text-[#63ad3c] italic">{{ $usuario->spices->pluck('nombre')->implode(', ') }}</p>
+            <p>{{ $user->descripcion_perfil }}</p>
+            <p class="text-[#63ad3c] italic">{{ $user->spices->pluck('nombre')->implode(', ') }}</p>
             <div class="flex flex-col items-end">
                 <a href="#" class="pt-[4px] pb-[7px] px-8 rounded-full bg-[#1b1b1b] text-white hover:opacity-60 transition ease font-semibold">
                     <p  class="text-center">Seguir su contenido</p>
@@ -47,7 +47,7 @@
     <div class="max-w-7xl mx-auto flex flex-col items-center gap-16 p-16 border-t border-t-[#3d3d3d]">
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($usuario->shares as $share)
+            @foreach($user->shares as $share)
                 
                 <div class="flex flex-col items-start gap-4 bg-white p-5 rounded-xl shadow-md hover:scale-[1.01] transition ease">
                     <a href="{{ route('shares.show', $share->id) }}" class="w-full">
@@ -61,8 +61,8 @@
                                     <p class="font-bold text-[0.8rem] pt-1">{{ $share->categorias->pluck('nombre')->implode(', ') }}</p>
                                 </div>
                                 <div class="flex flex-row items-center gap-3">
-                                    <p class="text-right text-[0.8rem]">@<span>{{ $share->usuario->nombre_usuario }}</span></p>
-                                    <img src="{{ $share->usuario->foto }}" alt="avatar usuario" class="w-8 rounded-full">
+                                    <p class="text-right text-[0.8rem]">@<span>{{ $share->user->name }}</span></p>
+                                    <img src="{{ $share->user->photo }}" alt="avatar usuario" class="w-8 rounded-full">
                                 </div>
                             </div>
 

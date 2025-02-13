@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUsuarioRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class StoreUsuarioRequest extends FormRequest
         // Per a crear un usuari, tots els camps són requerits:
         return [
             'nombre_completo' => 'required|string|max:255',
-            'nombre_usuario' => 'required|string|max:255|unique:usuarios',
-            'email' => 'required|email|max:255|unique:usuarios',
+            'name' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'perfil_privado' => 'boolean',
         ];
     }
 }

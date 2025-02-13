@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\SpiceController;
 
 /* ------------ RUTES API: ------------ */
 
-Route::apiResource('usuarios', UserController::class);
+Route::apiResource('users', UserController::class);
 Route::apiResource('shares', ShareController::class);
 Route::apiResource('comentarios', ComentarioController::class);
 Route::apiResource('categorias', CategoriaController::class);

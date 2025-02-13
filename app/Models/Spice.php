@@ -21,9 +21,9 @@ class Spice extends Model
 
     // Relación con otras tablas:
 
-    public function usuarios()
+    public function users()
     {
-        return $this->belongsToMany(Usuario::class); // Relación N:N
+        return $this->belongsToMany(User::class); // Relación N:N
     }
 
     public function shares()

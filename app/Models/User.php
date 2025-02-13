@@ -16,15 +16,15 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
     // Nombre de la tabla en MySQL
-    protected $table = 'usuarios'; // <--- Importante
+    protected $table = 'users'; // <--- Importante
 
     // Atributos que se pueden asignar en masa
     protected $fillable = [
         'nombre_completo',
-        'nombre_usuario',
+        'name',
         'email',
         'password',
-        'foto',
+        'photo',
         'descripcion_perfil',
         'perfil_privado',
     ];
@@ -35,6 +35,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'is_admin',
     ];
 
     // Atributos casteados

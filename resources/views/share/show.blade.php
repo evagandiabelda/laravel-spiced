@@ -27,10 +27,10 @@
             <div class="flex flex-col gap-8">
                 <div class="flex flex-row justify-between items-center px-4 gap-4">
                     <p class="text-gray-500 text-sm">Publicado el {{ $share->fecha_publicacion }}</p>
-                    <a href="{{ route('usuarios.show', $share->usuario->nombre_usuario) }}">
+                    <a href="{{ route('users.show', $share->user->name) }}">
                         <div class="flex flex-row justify-end items-center gap-3">
-                            <p class="italic font-bold">@ {{ $share->usuario->nombre_usuario }}</p>
-                            <img src="{{ $share->usuario->foto }}" alt="avatar usuario" class="w-14 rounded-full">
+                            <p class="italic font-bold">@ {{ $share->user->name }}</p>
+                            <img src="{{ $share->user->photo }}" alt="avatar usuario" class="w-14 rounded-full">
                         </div>
                     </a>
                 </div>

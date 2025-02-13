@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('comentarios', function (Blueprint $table) {
             $table->id(); // Se establece como PK y como AUTO_INCREMENT por defecto.
-            $table->foreignId('usuario_id')->constrained()->onDelete('cascade'); // FK
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // FK
             $table->foreignId('share_id')->constrained()->onDelete('cascade'); // FK
             $table->text('texto');
             $table->timestamps(); // created_at y updated_at

@@ -15,16 +15,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($usuarios as $usuario)
+                @foreach($users as $user)
                     <tr class="border-b">
-                        <td class="px-4 py-2">{{ $usuario->nombre_completo }}</td>
-                        <td class="px-4 py-2">{{ $usuario->nombre_usuario }}</td>
+                        <td class="px-4 py-2">{{ $user->nombre_completo }}</td>
+                        <td class="px-4 py-2">{{ $user->name }}</td>
                         <td class="px-4 py-2">
-                            <a href="{{ route('usuarios.show', $usuario->id) }}" class="text-blue-500 hover:text-blue-700">Ver</a>
+                            <a href="{{ route('users.show', $user->id) }}" class="text-blue-500 hover:text-blue-700">Ver</a>
                             <span class="mx-2">|</span>
-                            <a href="{{ route('usuarios.edit', $usuario->id) }}" class="text-yellow-500 hover:text-yellow-700">Editar</a>
+                            <a href="{{ route('users.edit', $user->id) }}" class="text-yellow-500 hover:text-yellow-700">Editar</a>
                             <span class="mx-2">|</span>
-                            <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500 hover:text-red-700">Eliminar</button>
@@ -37,6 +37,6 @@
     </div>
 
     <div class="mt-6">
-        <a href="{{ route('usuarios.create') }}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">Crear nuevo usuario</a>
+        <a href="{{ route('users.create') }}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">Crear nuevo usuario</a>
     </div>
 @endsection

@@ -21,7 +21,7 @@ class ComentarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id', // Validar que el usuario existe
+            'user_id' => 'required|exists:users,id', // Validar que el usuario existe
             'share_id' => 'required|exists:shares,id', // Validar que el share existe
             'texto' => 'required|string',
         ]);
@@ -49,12 +49,12 @@ class ComentarioController extends Controller
         $comentario = Comentario::findOrFail($id);
 
         $request->validate([
-            'usuario_id' => 'sometimes|exists:usuarios,id',
+            'user_id' => 'sometimes|exists:users,id',
             'share_id' => 'sometimes|exists:shares,id',
             'texto' => 'sometimes|required|string',
         ]);
 
-        $comentario->update($request->only(['usuario_id', 'share_id', 'texto']));
+        $comentario->update($request->only(['user_id', 'share_id', 'texto']));
 
         return response()->json($comentario);
     }

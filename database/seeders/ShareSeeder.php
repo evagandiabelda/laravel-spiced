@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Usuario;
+use App\Models\User;
 use App\Models\Share;
 use App\Models\Categoria;
 use App\Models\Spice;
@@ -12,11 +12,11 @@ class ShareSeeder extends Seeder
 {
     public function run()
     {
-        $usuarios = Usuario::all();
+        $users = User::all();
 
-        $usuarios->each(function($usuario) {
+        $users->each(function($user) {
             // Crear 3 shares por usuario
-            $shares = Share::factory()->count(3)->create(['usuario_id' => $usuario->id]);
+            $shares = Share::factory()->count(3)->create(['user_id' => $user->id]);
 
             // Obtener todas las categorías disponibles:
             $categorias = Categoria::all();

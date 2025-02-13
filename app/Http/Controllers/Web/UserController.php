@@ -11,21 +11,21 @@ class UserController extends Controller
     // Mostrar todos los usuarios
     public function index()
     {
-        $usuarios = User::all();
-        return view('usuarios.index', compact('usuarios'));
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     // Mostrar el formulario para crear un nuevo usuario
     public function create()
     {
-        return view('usuarios.create');
+        return view('users.create');
     }
 
     // Mostrar el formulario para editar un usuario
     public function edit($id)
     {
-        $usuario = User::findOrFail($id);
-        return view('usuarios.edit', compact('user'));
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     // Crear un nuevo usuario
@@ -33,10 +33,10 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'nombre_completo' => 'required|string|max:100',
-            'nombre_usuario' => 'required|string|unique:usuarios,nombre_usuario|max:50',
-            'email' => 'required|email|unique:usuarios,email|max:100',
+            'name' => 'required|string|unique:users,name|max:50',
+            'email' => 'required|email|unique:users,email|max:100',
             'password' => 'required|string|min:8',
-            'foto' => 'nullable|string|max:255',
+            'photo' => 'nullable|string|max:255',
             'descripcion_perfil' => 'nullable|string',
             'perfil_privado' => 'nullable|boolean',
         ]);
@@ -44,33 +44,33 @@ class UserController extends Controller
         // Abans de crear l'usuari, s'encripta la password:
         $validatedData['password'] = bcrypt($validatedData['password']);
 
-        $usuario = User::create($validatedData);
+        $user = User::create($validatedData);
 
-        return redirect()->route('usuarios.show', $usuario->id)->with('success', '¡Bienvenid@ a Spiced!');
+        return redirect()->route('users.show', $user->id)->with('success', '¡Bienvenid@ a Spiced!');
     }
 
     // Mostrar un solo usuario
-    public function show($nombre_usuario)
+    public function show($name)
     {
-        $usuario = User::where('nombre_usuario', $nombre_usuario)->firstOrFail();
-        return view('usuarios.show', compact('user'));
+        $user = User::where('name', $name)->firstOrFail();
+        return view('users.show', compact('user'));
     }
 
     // Actualizar un usuario
     public function update(Request $request, $id)
     {
-        $usuario = User::find($id);
+        $user = User::find($id);
 
-        if (!$usuario) {
+        if (!$user) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
         $validatedData = $request->validate([
             'nombre_completo' => 'required|string|max:100',
-            'nombre_usuario' => 'required|string|unique:usuarios,nombre_usuario,' . $usuario->id . '|max:50',
-            'email' => 'required|email|unique:usuarios,email,' . $usuario->id . '|max:100',
+            'name' => 'required|string|unique:users,name,' . $user->id . '|max:50',
+            'email' => 'required|email|unique:users,email,' . $user->id . '|max:100',
             'password' => 'nullable|string|min:8',
-            'foto' => 'nullable|string|max:255',
+            'photo' => 'nullable|string|max:255',
             'descripcion_perfil' => 'nullable|string',
             'perfil_privado' => 'nullable|boolean',
         ]);        
@@ -82,22 +82,22 @@ class UserController extends Controller
             unset($validatedData['password']); // Evita sobrescribir con un valor vacío
         }
 
-        $usuario->update($validatedData);
+        $user->update($validatedData);
 
-        return redirect()->route('usuarios.show', $usuario->id)->with('success', 'Cambios guardados.');
+        return redirect()->route('users.show', $user->id)->with('success', 'Cambios guardados.');
     }
 
     // Eliminar un usuario
     public function destroy($id)
     {
-        $usuario = User::find($id);
+        $user = User::find($id);
 
-        if (!$usuario) {
+        if (!$user) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
-        $usuario->delete();
+        $user->delete();
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

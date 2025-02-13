@@ -37,8 +37,8 @@
                                         <p class="font-bold text-[0.8rem] pt-1">{{ $share->categorias->pluck('nombre')->implode(', ') }}</p>
                                     </div>
                                     <div class="flex flex-row items-center gap-3">
-                                        <p class="text-right text-[0.8rem]">@<span>{{ $share->usuario->nombre_usuario }}</span></p>
-                                        <img src="{{ $share->usuario->foto }}" alt="avatar usuario" class="w-8 rounded-full">
+                                        <p class="text-right text-[0.8rem]">@<span>{{ $share->user->name }}</span></p>
+                                        <img src="{{ $share->user->photo }}" alt="avatar usuario" class="w-8 rounded-full">
                                     </div>
                                 </div>
 
